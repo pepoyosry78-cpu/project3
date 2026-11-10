@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مطعم فخر الشرق | تجربة طهي شرقية أصيلة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#D4AF37',
+                            goldHover: '#B89528',
+                            burgundy: '#5B0E2D',
+                            darkBurgundy: '#3B081C',
+                            charcoal: '#1A1A1A',
+                            cream: '#FAF6EF',
+                            cardBg: '#242424'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1A1A1A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B89528;
+        }
+    </style>
+</head>
+<body class="bg-brand-charcoal text-gray-100 flex flex-col min-h-screen relative overflow-x-hidden">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-brand-darkBurgundy/95 backdrop-blur-md border-b border-brand-gold/20 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-12 h-12 rounded-full bg-brand-gold/10 border border-brand-gold flex items-center justify-center text-brand-gold text-2xl font-bold shadow-inner">
+                        <i class="fa-solid font-bold fa-utensils"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-extrabold text-brand-gold tracking-wide block">فخر الشرق</span>
+                        <span class="text-xs text-gray-300 font-light block -mt-1">أصالة المذاق العربي</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 space-x-reverse text-base font-medium">
+                    <a href="#hero" class="text-brand-gold hover:text-white transition duration-200">الرئيسية</a>
+                    <a href="#menu" class="text-gray-300 hover:text-brand-gold transition duration-200">قائمة الطعام</a>
+                    <a href="#about" class="text-gray-300 hover:text-brand-gold transition duration-200">عن المطعم</a>
+                    <a href="#reservation" class="text-gray-300 hover:text-brand-gold transition duration-200">حجز طاولة</a>
+                    <a href="#reviews" class="text-gray-300 hover:text-brand-gold transition duration-200">آراء العملاء</a>
+                    <a href="#contact" class="text-gray-300 hover:text-brand-gold transition duration-200">تواصل معنا</a>
+                </nav>
+
+                <!-- Actions: Cart & Mobile Menu Toggle -->
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <!-- Cart Button -->
+                    <button id="cartBtn" onclick="toggleCartModal(true)" class="relative p-2.5 rounded-full bg-brand-burgundy/80 hover:bg-brand-burgundy text-brand-gold transition-all duration-200 border border-brand-gold/30 hover:border-brand-gold focus:outline-none" aria-label="سلة التسوق">
+                        <i class="fa-solid fa-basket-shopping text-xl"></i>
+                        <span id="cartBadge" class="absolute -top-1 -right-1 bg-brand-gold text-brand-darkBurgundy font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-darkBurgundy transition-transform scale-100">0</span>
+                    </button>
+
+                    <!-- Mobile Menu Trigger -->
+                    <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-brand-gold focus:outline-none" aria-label="القائمة">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-darkBurgundy border-b border-brand-gold/20 px-4 pt-2 pb-6 space-y-3">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block py-2 text-brand-gold font-medium border-b border-gray-800">الرئيسية</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-brand-gold transition border-b border-gray-800">قائمة الطعام</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-brand-gold transition border-b border-gray-800">عن المطعم</a>
+            <a href="#reservation" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-brand-gold transition border-b border-gray-800">حجز طاولة</a>
+            <a href="#reviews" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-brand-gold transition border-b border-gray-800">آراء العملاء</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-brand-gold transition">تواصل معنا</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-[88vh] flex items-center justify-center bg-cover bg-center text-center px-4 py-20" style="background-image: linear-gradient(to bottom, rgba(26, 26, 26, 0.75), rgba(59, 8, 28, 0.85)), url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop');">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-brand-gold/20 border border-brand-gold text-brand-gold text-sm font-semibold tracking-wide animate-pulse">
+                    ✨ تجربة طعام فاخرة لا تُنسى
+                </span>
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-white leading-tight">
+                    استمتع بأشهر الأطباق الشرقية <br>
+                    <span class="text-brand-gold">بنكهات أصيلة وطبيعية</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
+                    نجمع بين عراقة الماضي ولمسات الطهي الحديثة لنقدم لكم تجربة استثنائية من الشواء العربي، المقبلات الشامية، والحلويات الشرقية الفاخرة.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a href="#reservation" class="w-full sm:w-auto px-8 py-4 bg-brand-gold hover:bg-brand-goldHover text-brand-darkBurgundy font-bold text-lg rounded-xl transition duration-300 shadow-lg shadow-brand-gold/20 flex items-center justify-center space-x-2 space-x-reverse">
+                        <i class="fa-regular fa-calendar-check text-xl"></i>
+                        <span>احجز طاولتك الآن</span>
+                    </a>
+                    <a href="#menu" class="w-full sm:w-auto px-8 py-4 bg-brand-burgundy/80 hover:bg-brand-burgundy text-white font-bold text-lg rounded-xl border border-brand-gold/40 hover:border-brand-gold transition duration-300 flex items-center justify-center space-x-2 space-x-reverse">
+                        <i class="fa-solid fa-utensils text-xl"></i>
+                        <span>استعرض قائمة الطعام</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Bottom Fade Divider -->
+            <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-brand-charcoal to-transparent"></div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <!-- Section Title -->
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-brand-gold font-bold text-sm tracking-widest uppercase">القائمة الشهية</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white mt-2">اختر وجبتك المفضلة</p>
+                <div class="w-20 h-1 bg-brand-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 w-full md:w-auto" id="categoryTabs">
+                    <button onclick="filterCategory('all')" class="category-btn active border border-brand-gold/30 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-brand-gold text-brand-darkBurgundy font-bold">الكل</button>
+                    <button onclick="filterCategory('grill')" class="category-btn border border-brand-gold/30 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-brand-cardBg text-gray-300 hover:bg-brand-burgundy hover:text-white">المشويات</button>
+                    <button onclick="filterCategory('mains')" class="category-btn border border-brand-gold/30 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-brand-cardBg text-gray-300 hover:bg-brand-burgundy hover:text-white">الأطباق الرئيسية</button>
+                    <button onclick="filterCategory('starters')" class="category-btn border border-brand-gold/30 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-brand-cardBg text-gray-300 hover:bg-brand-burgundy hover:text-white">المقبلات</button>
+                    <button onclick="filterCategory('desserts')" class="category-btn border border-brand-gold/30 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-brand-cardBg text-gray-300 hover:bg-brand-burgundy hover:text-white">الحلويات</button>
+                    <button onclick="filterCategory('drinks')" class="category-btn border border-brand-gold/30 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-brand-cardBg text-gray-300 hover:bg-brand-burgundy hover:text-white">المشروبات</button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative w-full md:w-72">
+                    <input type="text" id="searchInput" onkeyup="searchMenuItems()" placeholder="ابحث عن طبق..." class="w-full bg-brand-cardBg border border-brand-gold/20 rounded-xl py-2.5 pr-10 pl-4 text-sm text-gray-200 placeholder-gray-400 focus:outline-none focus:border-brand-gold transition duration-200">
+                    <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-gray-400 text-sm"></i>
+                </div>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamic Items will be rendered here via Javascript -->
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-brand-darkBurgundy/30 border-y border-brand-gold/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Image Showcase -->
+                    <div class="relative">
+                        <div class="relative z-10 rounded-2xl overflow-hidden border-2 border-brand-gold/30 shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop" alt="داخل المطعم" class="w-full h-[400px] object-cover hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/800x600/3B081C/D4AF37?text=مطعم+فخر+الشرق'">
+                        </div>
+                        <!-- Decorative Frame Behind -->
+                        <div class="absolute -bottom-4 -left-4 w-full h-full border-2 border-brand-gold rounded-2xl -z-0 hidden sm:block"></div>
+                    </div>
+
+                    <!-- Story Text -->
+                    <div class="space-y-6">
+                        <span class="text-brand-gold font-bold text-sm tracking-widest uppercase">قصتنا شغف وتاريخ</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                            نحن لا نقدم الطعام فقط، بل نصنع تجارب تدوم في الذاكرة
+                        </h2>
+                        <p class="text-gray-300 leading-relaxed font-light">
+                            بدأت رحلة مطعم "فخر الشرق" بهدف تقديم المذاق العربي الأليم بأسلوب يحترم التقاليد ويواكب التطور. نختار مكوناتنا بعناية فائقة يومياً من أجود اللحوم والحديث من الخضروات والأعشاب الطازجة.
+                        </p>
+                        
+                        <!-- Features List -->
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="flex items-center space-x-3 space-x-reverse bg-brand-cardBg/60 p-3.5 rounded-xl border border-brand-gold/10">
+                                <i class="fa-solid fa-leaf text-brand-gold text-xl"></i>
+                                <span class="text-sm font-semibold text-gray-200">مكونات طازجة 100%</span>
+                            </div>
+                            <div class="flex items-center space-x-3 space-x-reverse bg-brand-cardBg/60 p-3.5 rounded-xl border border-brand-gold/10">
+                                <i class="fa-solid fa-fire text-brand-gold text-xl"></i>
+                                <span class="text-sm font-semibold text-gray-200">مشويات على الفحم</span>
+                            </div>
+                            <div class="flex items-center space-x-3 space-x-reverse bg-brand-cardBg/60 p-3.5 rounded-xl border border-brand-gold/10">
+                                <i class="fa-solid fa-award text-brand-gold text-xl"></i>
+                                <span class="text-sm font-semibold text-gray-200">طهاة عالميون</span>
+                            </div>
+                            <div class="flex items-center space-x-3 space-x-reverse bg-brand-cardBg/60 p-3.5 rounded-xl border border-brand-gold/10">
+                                <i class="fa-solid fa-chair text-brand-gold text-xl"></i>
+                                <span class="text-sm font-semibold text-gray-200">أجواء عائلية راقية</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reservation Section -->
+        <section id="reservation" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <div class="bg-brand-cardBg border border-brand-gold/30 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+                <!-- Background Glow -->
+                <div class="absolute -top-24 -right-24 w-60 h-60 bg-brand-burgundy/40 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-24 -left-24 w-60 h-60 bg-brand-gold/10 rounded-full blur-3xl"></div>
+
+                <div class="relative z-10 text-center max-w-xl mx-auto mb-10">
+                    <span class="text-brand-gold font-bold text-sm tracking-widest uppercase">احجز طاولتك</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-1">خدمة الحجز الإلكتروني السريع</h2>
+                    <p class="text-gray-400 text-sm mt-2">يرجى ملء النموذج أدناه لضمان توفير طاولتك المفضلة في الوقت المناسب</p>
+                </div>
+
+                <form id="reservationForm" onsubmit="handleReservationSubmit(event)" class="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">الاسم الكامل</label>
+                        <input type="text" required placeholder="أدخل اسمك الكريم" class="w-full bg-brand-charcoal border border-brand-gold/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold text-sm transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">رقم الهاتف</label>
+                        <input type="tel" required placeholder="05xxxxxxxx" class="w-full bg-brand-charcoal border border-brand-gold/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold text-sm transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">عدد الأفراد</label>
+                        <select required class="w-full bg-brand-charcoal border border-brand-gold/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold text-sm transition">
+                            <option value="1">شخص واحد</option>
+                            <option value="2" selected>شخصين</option>
+                            <option value="4">4 أشخاص</option>
+                            <option value="6">6 أشخاص</option>
+                            <option value="8">عائلة كبيرة (8+ أشخاص)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">تاريخ الحجز</label>
+                        <input type="date" id="resDate" required class="w-full bg-brand-charcoal border border-brand-gold/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold text-sm transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">الوقت</label>
+                        <input type="time" required class="w-full bg-brand-charcoal border border-brand-gold/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold text-sm transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">نوع الجلسة</label>
+                        <select class="w-full bg-brand-charcoal border border-brand-gold/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold text-sm transition">
+                            <option value="indoor">جلسة داخلية</option>
+                            <option value="outdoor">جلسة خارجية (هواء طلق)</option>
+                            <option value="vip">غرفة خاصة VIP</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">ملاحظات أو طلبات خاصة</label>
+                        <textarea rows="3" placeholder="هل لديك أي مناسبة أو تفضيلات خاصة بالطعام؟" class="w-full bg-brand-charcoal border border-brand-gold/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold text-sm transition resize-none"></textarea>
+                    </div>
+                    <div class="sm:col-span-2 mt-2">
+                        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-darkBurgundy font-bold py-4 rounded-xl text-lg transition duration-300 shadow-lg shadow-brand-gold/10">
+                            تأكيد الحجز الآن
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Customer Reviews Section -->
+        <section id="reviews" class="py-20 bg-brand-darkBurgundy/20 border-t border-brand-gold/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="text-brand-gold font-bold text-sm tracking-widest uppercase">ماذا يقول عملاؤنا</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">آراء واعتزاز نعتز به</h2>
+                    <div class="w-16 h-1 bg-brand-gold mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Review Card 1 -->
+                    <div class="bg-brand-cardBg border border-brand-gold/20 p-6 rounded-2xl relative">
+                        <div class="flex items-center space-x-1 space-x-reverse text-brand-gold mb-4">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                            "المشويات لديهم ذات نكهة استثنائية! طعم الكباب الحلبي والريش لا يُعلى عليه. الخدمة رائعة والاستقبال في غاية اللباقة."
+                        </p>
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="w-10 h-10 rounded-full bg-brand-burgundy flex items-center justify-center font-bold text-brand-gold border border-brand-gold/40">
+                                أ
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">أحمد الشمري</h4>
+                                <span class="text-xs text-gray-400">ناقد طعام محلي</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Card 2 -->
+                    <div class="bg-brand-cardBg border border-brand-gold/20 p-6 rounded-2xl relative">
+                        <div class="flex items-center space-x-1 space-x-reverse text-brand-gold mb-4">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                            "أفضل كبسة لحم طقتها في المدينة. النظافة والجودة 10/10 والحلويات الشرقية مثل الكنافة تحفة فنية!"
+                        </p>
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="w-10 h-10 rounded-full bg-brand-burgundy flex items-center justify-center font-bold text-brand-gold border border-brand-gold/40">
+                                س
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">سارة القحطاني</h4>
+                                <span class="text-xs text-gray-400">عميل في آي بي</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Card 3 -->
+                    <div class="bg-brand-cardBg border border-brand-gold/20 p-6 rounded-2xl relative">
+                        <div class="flex items-center space-x-1 space-x-reverse text-brand-gold mb-4">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                            "الأجواء الراقية والموسيقى الهادئة تجعل منه المكان المثالي للعشاء العائلي. الحجز الإلكتروني كان سهلاً ومريحاً جداً."
+                        </p>
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="w-10 h-10 rounded-full bg-brand-burgundy flex items-center justify-center font-bold text-brand-gold border border-brand-gold/40">
+                                م
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">محمد العتيبي</h4>
+                                <span class="text-xs text-gray-400">زائر مستمر</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location & Contact Section -->
+        <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Info & Hours -->
+                <div class="space-y-8">
+                    <div>
+                        <span class="text-brand-gold font-bold text-sm tracking-widest uppercase">يسعدنا تواصلكم</span>
+                        <h2 class="text-3xl font-extrabold text-white mt-1">تفضلوا بزيارتنا</h2>
+                        <p class="text-gray-400 text-sm mt-2">نحن في انتظاركم لتقديم أفضل خدمة وطعام يليق بكم</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4 space-x-reverse bg-brand-cardBg p-4 rounded-xl border border-brand-gold/10">
+                            <div class="w-10 h-10 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-location-dot text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">العنوان</h4>
+                                <p class="text-gray-400 text-xs mt-1">طريق الملك فهد، حي الصحافة، الرياض، المملكة العربية السعودية</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 space-x-reverse bg-brand-cardBg p-4 rounded-xl border border-brand-gold/10">
+                            <div class="w-10 h-10 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-clock text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">ساعات العمل</h4>
+                                <p class="text-gray-400 text-xs mt-1">يومياً: 12:00 ظهراً - 01:30 منتصف الليل</p>
+                                <p class="text-gray-400 text-xs">الجمعة: 01:00 ظهراً - 02:00 صباحاً</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 space-x-reverse bg-brand-cardBg p-4 rounded-xl border border-brand-gold/10">
+                            <div class="w-10 h-10 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-phone text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">الهاتف والاستفسارات</h4>
+                                <p class="text-gray-400 text-xs mt-1" dir="ltr">+966 11 456 7890 / +966 50 123 4567</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-3">تابعونا على مواقع التواصل</h4>
+                        <div class="flex space-x-3 space-x-reverse">
+                            <a href="#" class="w-10 h-10 rounded-xl bg-brand-cardBg border border-brand-gold/20 flex items-center justify-center text-gray-300 hover:text-brand-gold hover:border-brand-gold transition duration-200"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-brand-cardBg border border-brand-gold/20 flex items-center justify-center text-gray-300 hover:text-brand-gold hover:border-brand-gold transition duration-200"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-brand-cardBg border border-brand-gold/20 flex items-center justify-center text-gray-300 hover:text-brand-gold hover:border-brand-gold transition duration-200"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-brand-cardBg border border-brand-gold/20 flex items-center justify-center text-gray-300 hover:text-brand-gold hover:border-brand-gold transition duration-200"><i class="fa-brands fa-snapchat"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Placeholder -->
+                <div class="h-full min-h-[350px] bg-brand-cardBg rounded-2xl border border-brand-gold/20 overflow-hidden relative flex items-center justify-center">
+                    <iframe title="موقع المطعم على الخريطة" class="w-full h-full grayscale opacity-75 hover:grayscale-0 transition duration-500" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14494.39121773099!2d46.6752957!3d24.774265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2ef34c56e36d4f%3A0xf69c7f21bf2361b2!2sRiyadh!5e0!3m2!1sen!2ssa!4v1700000000000!5m2!1sen!2ssa" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-darkBurgundy border-t border-brand-gold/20 py-8 text-center text-xs text-gray-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 مطعم فخر الشرق. جميع الحقوق محفوظة.</p>
+            <p class="mt-1 text-gray-500">تم التطوير بشغف لتوفير أفضل تجربة مستخدم</p>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal / Drawer -->
+    <div id="cartModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex justify-end transition-opacity duration-300">
+        <div class="w-full max-w-md bg-brand-charcoal h-full border-r border-brand-gold/30 flex flex-col shadow-2xl">
+            <!-- Modal Header -->
+            <div class="p-5 bg-brand-darkBurgundy border-b border-brand-gold/20 flex items-center justify-between">
+                <div class="flex items-center space-x-2 space-x-reverse text-brand-gold font-bold text-lg">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span>سلة الطلبات</span>
+                </div>
+                <button onclick="toggleCartModal(false)" class="text-gray-400 hover:text-white p-1 rounded-lg">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items Container -->
+            <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-4 space-y-4">
+                <!-- Cart Items will be dynamically added here -->
+            </div>
+
+            <!-- Cart Summary & Checkout -->
+            <div class="p-5 bg-brand-cardBg border-t border-brand-gold/20 space-y-4">
+                <div class="flex justify-between items-center text-sm font-semibold">
+                    <span class="text-gray-300">المجموع الفرعي:</span>
+                    <span id="cartSubtotal" class="text-white">0 ر.س</span>
+                </div>
+                <div class="flex justify-between items-center text-sm font-semibold">
+                    <span class="text-gray-300">الضريبة (15%):</span>
+                    <span id="cartTax" class="text-white">0 ر.س</span>
+                </div>
+                <div class="flex justify-between items-center text-base font-bold border-t border-gray-700 pt-3">
+                    <span class="text-brand-gold">الإجمالي النهائي:</span>
+                    <span id="cartTotal" class="text-brand-gold text-lg">0 ر.س</span>
+                </div>
+                <button onclick="openCheckoutModal()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-darkBurgundy font-bold py-3.5 rounded-xl transition duration-200">
+                    متابعة الدفع والطلب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation / Message Modal -->
+    <div id="alertModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center px-4">
+        <div class="bg-brand-cardBg border border-brand-gold/40 rounded-2xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl">
+            <div class="w-16 h-16 bg-brand-gold/10 border border-brand-gold text-brand-gold rounded-full flex items-center justify-center mx-auto text-2xl">
+                <i id="alertIcon" class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 id="alertTitle" class="text-xl font-bold text-white">تم بنجاح!</h3>
+            <p id="alertMessage" class="text-sm text-gray-300">تم تسجيل طلبكم بنجاح.</p>
+            <button onclick="closeAlertModal()" class="w-full bg-brand-gold text-brand-darkBurgundy font-bold py-2.5 rounded-xl text-sm hover:bg-brand-goldHover transition">حسناً</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // Sample Menu Database
+        const menuData = [
+            {
+                id: 1,
+                name: "مشويات فخر الشرق المشكلة",
+                category: "grill",
+                price: 135,
+                image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=500&auto=format&fit=crop",
+                description: "تشكيلة فاخرة من كباب اللحم، شاووق الدجاج، والريش المشوية على الفحم مع الثومية والخبز المحمص."
+            },
+            {
+                id: 2,
+                name: "كباب حلبي مغطى بالفستق",
+                category: "grill",
+                price: 85,
+                image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=500&auto=format&fit=crop",
+                description: "لحم ضأن بلدي مفروم مع البقدونس والتوابل الشرقية الخاصة، مطعّم بالفستق الحلبي."
+            },
+            {
+                id: 3,
+                name: "كبسة لحم ضأن فاخرة",
+                category: "mains",
+                price: 95,
+                image: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?q=80&w=500&auto=format&fit=crop",
+                description: "أرز بسمتي طويل الحبة مطبوخ بالبهارات النجدية العريقة مع قطعة لحم ضأن طرية ومكسرات محامصة."
+            },
+            {
+                id: 4,
+                name: "طاجن ملوخية بالدجاج البلدي",
+                category: "mains",
+                price: 65,
+                image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=500&auto=format&fit=crop",
+                description: "أوراق الملوخية الطازجة المطهوة بالطشة الثومية والشطة الشرقية، تقدم مع الأرز والأرز الشعيرية."
+            },
+            {
+                id: 5,
+                name: "حمص باللحم والصنوبر",
+                category: "starters",
+                price: 38,
+                image: "https://images.unsplash.com/photo-1577968897966-3d4325b36b61?q=80&w=500&auto=format&fit=crop",
+                description: "حمص ناعم بزيت الزيتون البكر، يعلوه قطع لحم الضأن المحمرة والصنوبر المحمص."
+            },
+            {
+                id: 6,
+                name: "متبل باذنجان مشوي",
+                category: "starters",
+                price: 32,
+                image: "https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=500&auto=format&fit=crop",
+                description: "باذنجان مشوي على الفحم ممتزج مع الطحينة وزيت الزيتون وحبوب الرمان الطازجة."
+            },
+            {
+                id: 7,
+                name: "كنافة نابلسية بالجبن",
+                category: "desserts",
+                price: 45,
+                image: "https://images.unsplash.com/photo-1579372786545-d24232daf58c?q=80&w=500&auto=format&fit=crop",
+                description: "شعيرية الكنافة الذهبية المحشوة بالجبن العكاوي، تسقى بالشيرة الدافئة والفستق."
+            },
+            {
+                id: 8,
+                name: "أم علي بالمعجنات والمكسرات",
+                category: "desserts",
+                price: 35,
+                image: "https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=500&auto=format&fit=crop",
+                description: "رقائق الهشة المغمورة بالحليب الدافئ والقشطة الطازجة، محمرة بالفرن ومغطاة بالمكسرات."
+            },
+            {
+                id: 9,
+                name: "عصير رمان طازج",
+                category: "drinks",
+                price: 22,
+                image: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?q=80&w=500&auto=format&fit=crop",
+                description: "عصير رمان طبيعي 100% معصور طازجاً بدون إضافة سكر."
+            }
+        ];
+
+        // State Management
+        let cart = [];
+        let currentCategory = 'all';
+
+        // DOM Elements Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMenu(menuData);
+            
+            // Set minimum date for reservation to today
+            const today = new Date().toISOString().split('T')[0];
+            const resDateInput = document.getElementById('resDate');
+            if (resDateInput) resDateInput.min = today;
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Render Menu Items
+        function renderMenu(items) {
+            const menuGrid = document.getElementById('menuGrid');
+            menuGrid.innerHTML = '';
+
+            if (items.length === 0) {
+                menuGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-gray-400">
+                        <i class="fa-solid fa-utensils text-4xl mb-3 block text-brand-gold/40"></i>
+                        <p class="text-lg">عذراً، لم نجد أي أطباق تطابق بحثك.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            items.forEach(item => {
+                const cardHtml = `
+                    <div class="bg-brand-cardBg border border-brand-gold/15 rounded-2xl overflow-hidden hover:border-brand-gold/50 transition-all duration-300 flex flex-col justify-between group shadow-lg">
+                        <div>
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/600x400/3B081C/D4AF37?text=طعام+شرقي'">
+                                <span class="absolute top-3 left-3 bg-brand-darkBurgundy/90 text-brand-gold border border-brand-gold/30 font-bold px-3 py-1 rounded-full text-xs">
+                                    ${item.price} ر.س
+                                </span>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition duration-200">${item.name}</h3>
+                                <p class="text-gray-400 text-xs leading-relaxed font-light mb-4 line-clamp-2">${item.description}</p>
+                            </div>
+                        </div>
+                        <div class="px-5 pb-5 pt-0">
+                            <button onclick="addToCart(${item.id})" class="w-full bg-brand-burgundy/80 hover:bg-brand-burgundy text-white hover:text-brand-gold border border-brand-gold/30 font-semibold py-2.5 rounded-xl text-sm transition duration-200 flex items-center justify-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>أضف للسلة</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                menuGrid.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        // Filter Menu Categories
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // Update Tab Styles
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-brand-gold', 'text-brand-darkBurgundy', 'font-bold');
+                btn.classList.add('bg-brand-cardBg', 'text-gray-300');
+            });
+
+            event.target.classList.remove('bg-brand-cardBg', 'text-gray-300');
+            event.target.classList.add('bg-brand-gold', 'text-brand-darkBurgundy', 'font-bold');
+
+            applyFilters();
+        }
+
+        // Search Filter
+        function searchMenuItems() {
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            const filtered = menuData.filter(item => {
+                const matchesCategory = (currentCategory === 'all' || item.category === currentCategory);
+                const matchesSearch = item.name.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+
+            renderMenu(filtered);
+        }
+
+        // Cart Actions
+        function addToCart(itemId) {
+            const item = menuData.find(i => i.id === itemId);
+            if (!item) return;
+
+            const existingIndex = cart.findIndex(cartItem => cartItem.id === itemId);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+
+            updateCartUI();
+            showAlertModal('تم الإضافة!', `تم إضافة ${item.name} إلى سلة الطلبات.`);
+        }
+
+        function updateQuantity(itemId, delta) {
+            const index = cart.findIndex(i => i.id === itemId);
+            if (index > -1) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            // Update Badge
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cartBadge');
+            badge.innerText = totalCount;
+
+            // Render Items inside Modal
+            const container = document.getElementById('cartItemsContainer');
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center text-gray-400 py-12">
+                        <i class="fa-solid fa-basket-shopping text-5xl text-gray-600 mb-3"></i>
+                        <p class="text-base">سلة التسوق فارغة حالياً</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach(item => {
+                    const itemHtml = `
+                        <div class="bg-brand-cardBg border border-brand-gold/20 p-3.5 rounded-xl flex items-center justify-between gap-3">
+                            <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded-lg shrink-0" onerror="this.src='https://placehold.co/100x100/3B081C/D4AF37?text=طعام'">
+                            <div class="flex-grow">
+                                <h4 class="text-white font-semibold text-sm line-clamp-1">${item.name}</h4>
+                                <span class="text-brand-gold font-bold text-xs">${item.price} ر.س</span>
+                            </div>
+                            <div class="flex items-center space-x-2 space-x-reverse bg-brand-charcoal px-2 py-1 rounded-lg border border-gray-700">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="text-gray-400 hover:text-brand-gold text-xs px-1.5"><i class="fa-solid fa-minus"></i></button>
+                                <span class="text-white text-xs font-bold">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="text-gray-400 hover:text-brand-gold text-xs px-1.5"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', itemHtml);
+                });
+            }
+
+            // Price Calculations
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.15;
+            const total = subtotal + tax;
+
+            document.getElementById('cartSubtotal').innerText = `${subtotal.toFixed(2)} ر.س`;
+            document.getElementById('cartTax').innerText = `${tax.toFixed(2)} ر.س`;
+            document.getElementById('cartTotal').innerText = `${total.toFixed(2)} ر.س`;
+        }
+
+        function toggleCartModal(show) {
+            const modal = document.getElementById('cartModal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showAlertModal('السلة فارغة', 'يرجى إضافة أطباق للسلة أولاً قبل إتمام الطلب.');
+                return;
+            }
+            toggleCartModal(false);
+            cart = [];
+            updateCartUI();
+            showAlertModal('شكراً لطلبك!', 'تم استلام طلبك بنجاح وجاري تحضيره برعاية طهاتنا.');
+        }
+
+        // Reservation Form Handler
+        function handleReservationSubmit(e) {
+            e.preventDefault();
+            showAlertModal('تم تأكيد الحجز!', 'تم استقبال طلب حجز الطاولة بنجاح. سنقوم بإرسال رسالة تأكيد عبر الواتساب قريباً.');
+            document.getElementById('reservationForm').reset();
+        }
+
+        // General Alert Modal Logic
+        function showAlertModal(title, message) {
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertMessage').innerText = message;
+            document.getElementById('alertModal').classList.remove('hidden');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alertModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
